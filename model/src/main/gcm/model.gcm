@@ -1,0 +1,19 @@
+const BACKEND_PROPERTIES_FILE       : String    =   "backend.properties"
+const APP_STORAGE_PROP_KEY          : String    =   "APPLICATION_STORAGE"
+const UPLOAD_FOLDER_PROP_KEY        : String    =   "UPLOAD_FOLDER"
+const APP_STATE_WS_PORT_PROP_KEY    : String    =   "APPLICATION_STATE_WS_PORT"
+const APP_MAIN_PORT_PROP_KEY        : String    =   "APPLICATION_MAIN_PORT"
+const ACTION_RESET_PASSWORD         : String    =   "resetPassword"
+
+class Element {
+    att name:String
+    rel children : Child
+}
+
+
+class Child {
+    att name:String
+
+}
+
+index Elements : Element using name
