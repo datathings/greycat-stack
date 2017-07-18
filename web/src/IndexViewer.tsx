@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Node, Graph, NodeIndex} from 'greycat';
+
 let ReactJson = require('react-json-view').default;
 
 class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, { indexNode: NodeIndex, nodes: Array<Node> }> {
@@ -47,14 +48,14 @@ class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, {
     }
 
     render() {
-        var jsonViews = [];
+        let jsonViews = [];
         if (this.state != null && this.state.nodes != null) {
-            for (var i = 0; i < this.state.nodes.length; i++) {
+            for (let i = 0; i < this.state.nodes.length; i++) {
                 jsonViews.push(JSON.parse(this.state.nodes[i].toString()))
             }
         }
         return (
-            <ReactJson src={jsonViews} />
+            <ReactJson src={jsonViews}/>
         );
     }
 }

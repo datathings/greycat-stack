@@ -6,7 +6,6 @@ const logo = require('./logo.svg');
 import './App.css';
 import IndexViewer from './IndexViewer';
 
-
 class App extends React.Component<{graph : Graph}, {}> {
     render() {
         return (
