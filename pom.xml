@@ -5,22 +5,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.datathings.stack</groupId>
-    <artifactId>root</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>stack</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>stack</name>
 
     <properties>
+        <!-- Change this to desired version -->
         <greycat.version>10-SNAPSHOT</greycat.version>
-        <java2typescript.version>91</java2typescript.version>
     </properties>
 
     <modules>
         <module>model</module>
-        <!--
-        <module>backend</module>
-        <module>frontend</module>
-        -->
+        <module>server</module>
+        <module>client</module>
+        <module>web</module>
     </modules>
 
     <dependencies>
@@ -37,7 +36,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.6.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>

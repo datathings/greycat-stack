@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>model</artifactId>
-    <name>model</name>
+    <artifactId>web</artifactId>
+    <name>web</name>
 
     <parent>
         <artifactId>stack</artifactId>
@@ -13,14 +13,6 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.datathings</groupId>
-            <artifactId>greycat</artifactId>
-            <version>${greycat.version}</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
@@ -33,12 +25,10 @@
                         <id>GenModel</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>generate</goal>
+                            <goal>web</goal>
                         </goals>
                         <configuration>
-                            <input>src/main/gcm/model.gcm</input>
-                            <packageName>model</packageName>
-                            <generateJS>true</generateJS>
+                            <target>${basedir}/package.json</target>
                         </configuration>
                     </execution>
                 </executions>
