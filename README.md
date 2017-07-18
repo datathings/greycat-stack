@@ -40,7 +40,7 @@ This project aims at showing how to start a GreyCat project and how models can b
 
     your browser will be open at localhost:3000, repeat operation with Clients to see sensors added to the list in a reactive way.
 
-1. Happy hackin!
+1. Happy hacking!
 
 ## Model
 

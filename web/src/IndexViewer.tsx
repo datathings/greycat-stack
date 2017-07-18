@@ -2,8 +2,6 @@ import * as React from 'react';
 import {Node, Graph, NodeIndex} from 'greycat';
 let ReactJson = require('react-json-view').default;
 
-//import ReactJson from 'react-json-view';
-
 class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, { indexNode: NodeIndex, nodes: Array<Node> }> {
 
     componentWillMount() {
