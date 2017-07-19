@@ -13,18 +13,18 @@ class IndexViewer
     }
 
     componentWillMount() {
-        let updateState = this.updateState;
+        let onIndexUpdate = this.onIndexUpdate;
         this.props.graph.index(0, new Date().getTime(), this.props.indexName, function (index: NodeIndex) {
-            index.findFrom(function (nodes: Array<Node>) {
-                updateState({ indexNode: index, nodes: nodes });
-            });
-            index.listen(function () {
-                index.travelInTime(new Date().getTime(), function (newIndex: NodeIndex) {
-                    newIndex.findFrom(function (nodes: Array<Node>) {
-                        updateState({ indexNode: newIndex, nodes: nodes });
-                    });
-                });
-            });
+            index.listen(function () { index.travelInTime(new Date().getTime(), onIndexUpdate); });
+            onIndexUpdate(index);
+        });
+    }
+
+    @bind
+    onIndexUpdate(newIndex: NodeIndex) {
+        let updateState = this.updateState;
+        newIndex.findFrom(function (nodes: Array<Node>) {
+            updateState({ indexNode: newIndex, nodes: nodes });
         });
     }
 
@@ -44,7 +44,9 @@ class IndexViewer
     }
 
     render() {
-        return (<ReactJson src={this.state.nodes.map(node => JSON.parse(node.toString()))} />);
+        let json = this.state.nodes.map(node => JSON.parse(node.toString()));
+        let result = <ReactJson src={json.slice(-20)} />;
+        return result;
     }
 }
 
