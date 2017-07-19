@@ -5,7 +5,8 @@ let ReactJson = require('react-json-view').default;
 import { bind } from 'decko';
 
 class IndexViewer
-    extends React.Component<{ graph: Graph, indexName: string }, { indexNode?: NodeIndex, nodes: Array<Node> }> {
+    extends React.Component<{ graph: Graph, indexName: string },
+    { indexNode?: NodeIndex, nodes: Array<Node>, listeningID?: number }> {
 
     constructor(props: { graph: Graph, indexName: string }) {
         super(props);
@@ -14,10 +15,7 @@ class IndexViewer
 
     componentWillMount() {
         let onIndexUpdate = this.onIndexUpdate;
-        this.props.graph.index(0, new Date().getTime(), this.props.indexName, function (index: NodeIndex) {
-            index.listen(function () { index.travelInTime(new Date().getTime(), onIndexUpdate); });
-            onIndexUpdate(index);
-        });
+        this.props.graph.index(0, new Date().getTime(), this.props.indexName, onIndexUpdate);
     }
 
     @bind
@@ -33,10 +31,22 @@ class IndexViewer
     }
 
     @bind
-    updateState(newState: { indexNode?: NodeIndex, nodes: Array<Node> }) {
+    updateState(newState: { indexNode?: NodeIndex, nodes: Array<Node>, listeningID?: number }) {
         let prevState = this.state;
+        let onIndexUpdate = this.onIndexUpdate;
+        if (prevState.listeningID === undefined && newState.indexNode !== undefined) {
+            let newIndex: NodeIndex = newState.indexNode;
+            newState.listeningID = newIndex.listen(function () { 
+                newIndex.travelInTime(new Date().getTime(), onIndexUpdate); 
+            });
+        } else {
+            newState.listeningID = prevState.listeningID;
+        }
         this.setState(newState, function () {
             if (prevState.indexNode !== undefined) {
+                if (prevState.listeningID !== undefined && newState.listeningID === undefined) {
+                    prevState.indexNode.unlisten(prevState.listeningID);
+                }
                 prevState.indexNode.free();
             }
             prevState.nodes.forEach(node => node.free());
@@ -44,9 +54,7 @@ class IndexViewer
     }
 
     render() {
-        let json = this.state.nodes.map(node => JSON.parse(node.toString()));
-        let result = <ReactJson src={json.slice(-20)} />;
-        return result;
+        return <ReactJson src={this.state.nodes.map(node => JSON.parse(node.toString())).slice(-10)} />;
     }
 }
 
