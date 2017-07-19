@@ -4,11 +4,12 @@ import { Node, Graph, NodeIndex } from 'greycat';
 let ReactJson = require('react-json-view').default;
 import { bind } from 'decko';
 
-class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, { indexNode?: NodeIndex, nodes: Array<Node> }> {
+class IndexViewer
+    extends React.Component<{ graph: Graph, indexName: string }, { indexNode?: NodeIndex, nodes: Array<Node> }> {
 
     constructor(props: { graph: Graph, indexName: string }) {
         super(props);
-        this.state = {nodes:[]};
+        this.state = { nodes: [] };
     }
 
     componentWillMount() {
@@ -17,25 +18,25 @@ class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, {
             index.findFrom(function (nodes: Array<Node>) {
                 updateState({ indexNode: index, nodes: nodes });
             });
-            index.listen(function (times) {
+            index.listen(function () {
                 index.travelInTime(new Date().getTime(), function (newIndex: NodeIndex) {
                     newIndex.findFrom(function (nodes: Array<Node>) {
                         updateState({ indexNode: newIndex, nodes: nodes });
                     });
                 });
             });
-        })
+        });
     }
 
     componentWillUnmount() {
-        this.updateState({nodes:[]});
+        this.updateState({ nodes: [] });
     }
 
     @bind
     updateState(newState: { indexNode?: NodeIndex, nodes: Array<Node> }) {
         let prevState = this.state;
         this.setState(newState, function () {
-            if (prevState.indexNode != undefined) {
+            if (prevState.indexNode !== undefined) {
                 prevState.indexNode.free();
             }
             prevState.nodes.forEach(node => node.free());
@@ -43,9 +44,7 @@ class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, {
     }
 
     render() {
-        return (
-            <ReactJson src={this.state.nodes.map(node => JSON.parse(node.toString()))} />
-        );
+        return (<ReactJson src={this.state.nodes.map(node => JSON.parse(node.toString()))} />);
     }
 }
 
