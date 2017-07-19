@@ -21,9 +21,7 @@ class IndexViewer
     @bind
     onIndexUpdate(newIndex: NodeIndex) {
         let updateState = this.updateState;
-        newIndex.findFrom(function (nodes: Array<Node>) {
-            updateState({ indexNode: newIndex, nodes: nodes });
-        });
+        newIndex.findFrom((resolvedNodes: Array<Node>) => updateState({ indexNode: newIndex, nodes: resolvedNodes }));
     }
 
     componentWillUnmount() {
@@ -36,9 +34,7 @@ class IndexViewer
         let onIndexUpdate = this.onIndexUpdate;
         if (prevState.listeningID === undefined && newState.indexNode !== undefined) {
             let newIndex: NodeIndex = newState.indexNode;
-            newState.listeningID = newIndex.listen(function () { 
-                newIndex.travelInTime(new Date().getTime(), onIndexUpdate); 
-            });
+            newState.listeningID = newIndex.listen(() => newIndex.travelInTime(new Date().getTime(), onIndexUpdate));
         } else {
             newState.listeningID = prevState.listeningID;
         }
