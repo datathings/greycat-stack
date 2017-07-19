@@ -20,7 +20,7 @@ class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, {
             index.listen(function (times) {
                 index.travelInTime(new Date().getTime(), function (newIndex: NodeIndex) {
                     newIndex.findFrom(function (nodes: Array<Node>) {
-                        updateState({ indexNode: index, nodes: nodes });
+                        updateState({ indexNode: newIndex, nodes: nodes });
                     });
                 });
             });
