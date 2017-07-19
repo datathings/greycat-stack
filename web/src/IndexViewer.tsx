@@ -27,16 +27,16 @@ class IndexViewer
     }
 
     componentWillUnmount() {
+        if ( this.state.indexNode && this.state.listeningID ) {
+            this.state.indexNode.unlisten(this.state.listeningID);
+        }
         this.updateState({ nodes: [] });
     }
 
     updateState(newState: { indexNode?: NodeIndex, nodes: Array<Node>, listeningID?: number }) {
         let prevState = this.state;
         this.setState(newState, function () {
-            if (prevState.indexNode !== undefined) {
-                if (prevState.listeningID !== undefined && newState.listeningID === undefined) {
-                    prevState.indexNode.unlisten(prevState.listeningID);
-                }
+            if (prevState.indexNode) {
                 prevState.indexNode.free();
             }
             prevState.nodes.forEach(node => node.free());
