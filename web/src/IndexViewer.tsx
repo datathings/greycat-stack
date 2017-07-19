@@ -1,61 +1,50 @@
 import * as React from 'react';
-import {Node, Graph, NodeIndex} from 'greycat';
+import { Node, Graph, NodeIndex } from 'greycat';
 
 let ReactJson = require('react-json-view').default;
+import { bind } from 'decko';
 
-class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, { indexNode: NodeIndex, nodes: Array<Node> }> {
+class IndexViewer extends React.Component<{ graph: Graph, indexName: string }, { indexNode?: NodeIndex, nodes: Array<Node> }> {
+
+    constructor(props: { graph: Graph, indexName: string }) {
+        super(props);
+        this.state = {nodes:[]};
+    }
 
     componentWillMount() {
-        let now = new Date().getTime();
-        let refresh = this.refreshState.bind(this);
-        let indexName = this.props.indexName;
-        let graph = this.props.graph;
-        graph.index(0, now, indexName, function (index: NodeIndex) {
-            refresh(index);
+        let updateState = this.updateState;
+        this.props.graph.index(0, new Date().getTime(), this.props.indexName, function (index: NodeIndex) {
+            index.findFrom(function (nodes: Array<Node>) {
+                updateState({ indexNode: index, nodes: nodes });
+            });
             index.listen(function (times) {
-                index.free();
-                let newNow = new Date().getTime();
-                graph.index(0, newNow, indexName, function (newIndex: NodeIndex) {
-                    refresh(newIndex);
+                index.travelInTime(new Date().getTime(), function (newIndex: NodeIndex) {
+                    newIndex.findFrom(function (nodes: Array<Node>) {
+                        updateState({ indexNode: index, nodes: nodes });
+                    });
                 });
             });
         })
     }
 
     componentWillUnmount() {
-        this.freeState();
+        this.updateState({nodes:[]});
     }
 
-    refreshState(newIndex: NodeIndex) {
-        let setState = this.setState.bind(this);
-        let freeState = this.freeState.bind(this);
-        newIndex.findFrom(function (nodes: Array<Node>) {
-            freeState();
-            setState({indexNode: newIndex, nodes: nodes});
+    @bind
+    updateState(newState: { indexNode?: NodeIndex, nodes: Array<Node> }) {
+        let prevState = this.state;
+        this.setState(newState, function () {
+            if (prevState.indexNode != undefined) {
+                prevState.indexNode.free();
+            }
+            prevState.nodes.forEach(node => node.free());
         });
     }
 
-    freeState() {
-        let selfState = this.state;
-        if (selfState != null) {
-            if (selfState.indexNode != null) {
-                selfState.indexNode.free();
-            }
-            if (selfState.nodes != null) {
-                this.props.graph.freeNodes(selfState.nodes);
-            }
-        }
-    }
-
     render() {
-        let jsonViews = [];
-        if (this.state != null && this.state.nodes != null) {
-            for (let i = 0; i < this.state.nodes.length; i++) {
-                jsonViews.push(JSON.parse(this.state.nodes[i].toString()))
-            }
-        }
         return (
-            <ReactJson src={jsonViews}/>
+            <ReactJson src={this.state.nodes.map(node => JSON.parse(node.toString()))} />
         );
     }
 }
