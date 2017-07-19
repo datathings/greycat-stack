@@ -10,7 +10,7 @@
     "decko": "^1.2.0",
     "greycat": "/Users/duke/.m2/repository/com/datathings/greycat/10-SNAPSHOT/greycat-10-20170719.093408-19.tgz",
     "greycat-websocket": "/Users/duke/.m2/repository/com/datathings/greycat-websocket/10-SNAPSHOT/greycat-websocket-10-20170719.093436-14.tgz",
-    "model": "../model/target/generated-sources-web/model/model-1.0.0.tgz",
+    "model": "../model/target/generated-sources-web/model/model-0.0.1.tgz",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-json-view": "^1.10.9",
