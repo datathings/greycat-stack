@@ -44,7 +44,7 @@ class IndexViewer
     }
 
     render() {
-        return <ReactJson src={this.state.nodes.map(node => JSON.parse(node.toString())).slice(-10)} />;
+        return <ReactJson src={this.state.nodes.map(node => JSON.parse(node.toString())).slice(-10).reverse()} />;
     }
 }
 

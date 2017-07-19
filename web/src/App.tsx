@@ -24,12 +24,13 @@ class App extends React.Component<{ graph: Graph }, {}> {
 
     @bind
     addSensor(e: {}) {
+        console.log("click");
         try {
-        let newSensor: Sensor = Sensor.create(0, 0, this.props.graph);
-        newSensor.setCode('sensor-js-' + new Date().getTime());
-        Sensors.update(newSensor, () => { /*noop*/ });
-        this.props.graph.save(() => {/*noop*/ });
-        } catch(e){
+            let newSensor: Sensor = Sensor.create(0, 0, this.props.graph);
+            newSensor.setCode('sensor-js-' + new Date().getTime());
+            Sensors.update(newSensor, () => { /*noop*/ });
+            this.props.graph.save(() => {/*noop*/ });
+        } catch (e) {
             console.error(e);
         }
 
