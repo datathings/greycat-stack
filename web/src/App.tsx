@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Constants } from 'model';
+import { Constants, Sensor, Sensors } from 'model';
 import { Graph } from 'greycat';
 
 const logo = require('./logo.svg');
 import './App.css';
 import IndexViewer from './IndexViewer';
 
-import {bind} from 'decko';
+import { bind } from 'decko';
 
 class App extends React.Component<{ graph: Graph }, {}> {
     render() {
@@ -23,9 +23,16 @@ class App extends React.Component<{ graph: Graph }, {}> {
     }
 
     @bind
-    addSensor(e:any){
-        console.log(this.props.graph);
-        console.log("hello",e);
+    addSensor(e: {}) {
+        try {
+        let newSensor: Sensor = Sensor.create(0, 0, this.props.graph);
+        newSensor.setCode('sensor-js-' + new Date().getTime());
+        Sensors.update(newSensor, () => { /*noop*/ });
+        this.props.graph.save(() => {/*noop*/ });
+        } catch(e){
+            console.error(e);
+        }
+
     }
 
 }
