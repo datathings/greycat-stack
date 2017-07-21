@@ -29,35 +29,11 @@
                         </goals>
                         <configuration>
                             <target>${basedir}/package.json</target>
+                            <moduleToClean>model</moduleToClean>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-            <groupId>org.codehaus.gmaven</groupId>
-            <artifactId>groovy-maven-plugin</artifactId>
-            <version>2.0</version>
-            <executions>
-                <execution>
-                    <id>frontend.compile</id>
-                    <phase>compile</phase>
-                    <goals>
-                        <goal>execute</goal>
-                    </goals>
-                    <configuration>
-                        <source>
-                            println("Installing NPM dependencies...")
-                            def installProcess = "npm install".execute(null, new File("${basedir}"))
-                            installProcess.waitForProcessOutput(System.out, System.err)
-                            if (installProcess.exitValue() != 0) {
-                                exit
-                            }
-                            println("Done, now use npm run start or npm run build");
-                        </source>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
         </plugins>
     </build>
 
