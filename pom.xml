@@ -12,7 +12,7 @@
 
     <properties>
         <!-- Change this to desired version -->
-        <greycat.version>10-SNAPSHOT</greycat.version>
+        <greycat.version>10</greycat.version>
     </properties>
 
     <modules>
