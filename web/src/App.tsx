@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Constants, Sensor, Sensors } from 'model';
-import { Graph } from 'greycat';
+import { Graph } from '@greycat/greycat';
 
 const logo = require('./logo.svg');
 import './App.css';

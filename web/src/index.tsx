@@ -4,8 +4,8 @@ import App from './App';
 
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
-import { GraphBuilder, Graph } from 'greycat';
-import { WSClient } from 'greycat-websocket';
+import { GraphBuilder, Graph } from '@greycat/greycat';
+import { WSClient } from '@greycat/greycat-websocket';
 import { ModelPlugin } from 'model';
 
 let graph: Graph = GraphBuilder.newBuilder()
