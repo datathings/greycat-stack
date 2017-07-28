@@ -12,7 +12,7 @@
 
     <properties>
         <!-- Change this to desired version -->
-        <greycat.version>10</greycat.version>
+        <greycat.version>11-SNAPSHOT</greycat.version>
     </properties>
 
     <modules>
@@ -47,8 +47,8 @@
 
     <repositories>
         <repository>
-            <id>OSS-public</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <id>datathings.public</id>
+            <url>https://registry.datathings.com/repository/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -60,8 +60,8 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>OSS-public</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <id>datathings.public</id>
+            <url>https://registry.datathings.com/repository/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
