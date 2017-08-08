@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Node, Graph, NodeIndex } from 'greycat';
+import { Node, Graph, NodeIndex } from '@greycat/greycat';
 
 let ReactJson = require('react-json-view').default;
 
